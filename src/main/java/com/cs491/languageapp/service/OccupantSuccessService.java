@@ -77,6 +77,11 @@ public class OccupantSuccessService {
         return occupant.size();
     }
 
+    public Integer falseNumberInAWeek(int occupantId){
+        List<OccupantSuccess> occupant = occupantSuccessRepository.findByOccupant_IdAndTrueIs(occupantId, false);
+        return occupant.size();
+    }
+
 
     //Bean of StartConfig
     public void deleteAll(){

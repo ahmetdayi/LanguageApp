@@ -1,11 +1,8 @@
 package com.cs491.languageapp.controller;
 
 
-import com.cs491.languageapp.entity.OccupantSuccess;
-import com.cs491.languageapp.entity.Word;
 import com.cs491.languageapp.entity.request.CreateOccupantSuccessRequest;
 import com.cs491.languageapp.entity.response.CreateOccupantSuccessResponse;
-import com.cs491.languageapp.service.OccupantService;
 import com.cs491.languageapp.service.OccupantSuccessService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,5 +32,14 @@ public class OccupantSuccessController {
     @GetMapping
     public ResponseEntity<Map<String,Integer>> getOccupantSuccessByLevel(@RequestParam int occupantId, @RequestParam String level){
         return new ResponseEntity<>(occupantSuccessService.getOccupantSuccessByLevel(occupantId,level),HttpStatus.OK);
+    }
+
+    @GetMapping("/correct-number-in-a-week")
+    public ResponseEntity<Integer> correctNumberInAWeek(@RequestParam int occupantId){
+        return new ResponseEntity<>(occupantSuccessService.correctNumberInAWeek(occupantId),HttpStatus.OK);
+    }
+    @GetMapping("/false-number-in-a-week")
+    public ResponseEntity<Integer> falseNumberInAWeek(int occupantId){
+        return new ResponseEntity<>(occupantSuccessService.falseNumberInAWeek(occupantId),HttpStatus.OK);
     }
 }
