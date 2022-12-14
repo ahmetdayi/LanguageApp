@@ -21,10 +21,12 @@ public class Occupant {
     private String name;
     private String email;
 
-    private double totalSuccess;
     private String password;
     @OneToMany(cascade =CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "occupant")
     private List<OccupantSuccess> occupantSuccesses;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "occupant")
+    private TotalSuccessOfOccupant totalSuccessOfOccupant;
 
     public Occupant(String name, String email, String password) {
 

@@ -2,6 +2,7 @@ package com.cs491.languageapp.service;
 
 import com.cs491.languageapp.entity.Convertor.OccupantConverter;
 import com.cs491.languageapp.entity.Occupant;
+import com.cs491.languageapp.entity.TotalSuccessOfOccupant;
 import com.cs491.languageapp.entity.request.CreateOccupantRequest;
 import com.cs491.languageapp.entity.response.CreateOccupantResponse;
 import com.cs491.languageapp.entity.response.OccupantResponse;
@@ -15,10 +16,16 @@ public class OccupantService {
     private final OccupantRepository occupantRepository;
     private final OccupantConverter occupantConverter;// Bu tarz classları farklı classlarda calıştırmak istediğimizde dependicy injection kullanıyoruz bu yazdığımız şey de dependicy injection deniyor
 
+    private final TotalSuccessOfOccupantService successOfOccupantService;
     public CreateOccupantResponse create(CreateOccupantRequest request) {
 
         Occupant occupant = new Occupant(request.getName(), request.getEmail(), request.getPassword());
         CreateOccupantResponse convert = occupantConverter.convert(occupantRepository.save(occupant)); // methodu data base e kaydetmek için yazılır UserREPOSİTORY.SAVE(SAVE)
+        TotalSuccessOfOccupant
+                successOfOccupant =
+                new TotalSuccessOfOccupant(0,0,0,0,findById(convert.getId()));
+
+        successOfOccupantService.create(successOfOccupant);
         return convert;
     }
 
@@ -41,10 +48,6 @@ public class OccupantService {
         return occupantRepository.findByEmail(email);
     }
 
-    protected void saveTotalSuccess(int occupantId){
-        Occupant occupant = findById(occupantId);
-        occupant.setTotalSuccess(occupant.getTotalSuccess()+1);
-    }
 
 
 
