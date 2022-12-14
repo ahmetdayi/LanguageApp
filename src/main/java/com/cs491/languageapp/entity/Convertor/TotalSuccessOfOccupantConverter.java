@@ -12,6 +12,9 @@ public class TotalSuccessOfOccupantConverter {
 
 
     public TotalSuccessOfOccupantResponse convert(TotalSuccessOfOccupant successOfOccupant){
+        if(successOfOccupant ==null){
+            return null;
+        }
 
         return new TotalSuccessOfOccupantResponse
                 (

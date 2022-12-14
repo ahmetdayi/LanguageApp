@@ -3,7 +3,7 @@ package com.cs491.languageapp.entity.Convertor;
 import com.cs491.languageapp.entity.OccupantSuccess;
 import com.cs491.languageapp.entity.response.CreateOccupantSuccessResponse;
 
-import com.cs491.languageapp.entity.response.WordResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +18,9 @@ public class OccupantSuccessConverter {
     private final OccupantConverter occupantConverter;
 
     public CreateOccupantSuccessResponse convert(OccupantSuccess occupantSuccess){
+        if(occupantSuccess==null){
+            return null;
+        }
 
         return new CreateOccupantSuccessResponse
                 (occupantSuccess.getId(),
@@ -27,9 +30,13 @@ public class OccupantSuccessConverter {
                         occupantConverter.convertOccupantResponse(occupantSuccess.getOccupant()));
     }
 
-    public List<CreateOccupantSuccessResponse> convert(List<OccupantSuccess> fromlist){
+    public List<CreateOccupantSuccessResponse> convert(List<OccupantSuccess> fromList){
 
-        return fromlist
+        if (fromList==null){
+            return null;
+        }
+
+        return fromList
                 .stream()
                 .map(occupantSuccess ->
                         new CreateOccupantSuccessResponse(

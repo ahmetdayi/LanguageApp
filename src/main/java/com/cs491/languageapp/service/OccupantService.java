@@ -1,12 +1,16 @@
 package com.cs491.languageapp.service;
 
+import com.cs491.languageapp.core.exception.OccupantDoesntExistException;
+import com.cs491.languageapp.core.exception.constant.Constant;
 import com.cs491.languageapp.entity.Convertor.OccupantConverter;
 import com.cs491.languageapp.entity.Occupant;
 import com.cs491.languageapp.entity.TotalSuccessOfOccupant;
 import com.cs491.languageapp.entity.request.CreateOccupantRequest;
+import com.cs491.languageapp.entity.request.UpdateOccupantRequest;
 import com.cs491.languageapp.entity.response.CreateOccupantResponse;
 import com.cs491.languageapp.entity.response.OccupantResponse;
-import com.cs491.languageapp.repostory.OccupantRepository;
+import com.cs491.languageapp.entity.response.UpdateOccupantResponse;
+import com.cs491.languageapp.entity.response.repostory.OccupantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +23,10 @@ public class OccupantService {
     private final TotalSuccessOfOccupantService successOfOccupantService;
     public CreateOccupantResponse create(CreateOccupantRequest request) {
 
-        Occupant occupant = new Occupant(request.getName(), request.getEmail(), request.getPassword());
+        Occupant occupant = new Occupant(request.getName(), request.getEmail(), request.getPassword(), request.getMatchingPassword());
         CreateOccupantResponse convert = occupantConverter.convert(occupantRepository.save(occupant)); // methodu data base e kaydetmek için yazılır UserREPOSİTORY.SAVE(SAVE)
+
+      //total success create
         TotalSuccessOfOccupant
                 successOfOccupant =
                 new TotalSuccessOfOccupant(0,0,0,0,findById(convert.getId()));
@@ -29,23 +35,36 @@ public class OccupantService {
         return convert;
     }
 
+    public UpdateOccupantResponse update(UpdateOccupantRequest request){
+        Occupant occ = findById(request.getId());
+        occ.setName(request.getName());
+        occ.setPassword(request.getPassword());
+        occ.setMatchingPassword(request.getMatchingPassword());
+        return occupantConverter.convertUpdate(occ);
+
+
+
+    }
+
     public void delete(int id) {
         occupantRepository.deleteById(id);
     }
 
     public OccupantResponse getById(int id) {
-        Occupant occupant = occupantRepository.findById(id);
-        OccupantResponse convert = occupantConverter.convertOccupantResponse(occupant);
-
-        return convert;
+        Occupant occupant = findById(id);
+        return occupantConverter.convertOccupantResponse(occupant);
     }
 
     protected Occupant findById(int id){
-        return occupantRepository.findById(id);
+        return occupantRepository.
+                findById(id).
+                orElseThrow(()->new OccupantDoesntExistException(Constant.OCCUPANT_DOESNT_EXIST));
     }
 
     protected Occupant findByEmail(String email){
-        return occupantRepository.findByEmail(email);
+        return occupantRepository.
+                findByEmail(email).
+                orElseThrow(()->new OccupantDoesntExistException(Constant.OCCUPANT_DOESNT_EXIST));
     }
 
 

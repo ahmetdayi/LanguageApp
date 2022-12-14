@@ -1,5 +1,7 @@
 package com.cs491.languageapp.service;
 
+import com.cs491.languageapp.core.exception.PasswordDoesntMatchEmailException;
+import com.cs491.languageapp.core.exception.constant.Constant;
 import com.cs491.languageapp.entity.Convertor.OccupantConverter;
 import com.cs491.languageapp.entity.Occupant;
 import com.cs491.languageapp.entity.request.LoginRequest;
@@ -21,8 +23,7 @@ public class AuthService {
             return new LoginResponse(occupantConverter.convertOccupantResponse(occupant));
         }
         else{
-            //TODO hata don
-            return null;
+           throw new PasswordDoesntMatchEmailException(Constant.PASSWORD_DOESNT_MATCH_EMAIL);
         }
 
     }

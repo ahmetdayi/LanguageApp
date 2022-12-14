@@ -1,21 +1,21 @@
 package com.cs491.languageapp.entity.request;
 
 import com.cs491.languageapp.core.validator.ValidPassword;
-import com.cs491.languageapp.core.validator.create.PasswordMatches;
+import com.cs491.languageapp.core.validator.update.UpdatePasswordMatches;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
-@PasswordMatches
-public class CreateOccupantRequest {
+@UpdatePasswordMatches(message ="Password dont match")
+public class UpdateOccupantRequest {
+
+    @NotNull
+    private int id;
 
     @NotBlank
     private String name;
-    @NotBlank
-    @Email(regexp = ".+@.+\\..+")
-    private String email;
 
     @ValidPassword
     @NotBlank

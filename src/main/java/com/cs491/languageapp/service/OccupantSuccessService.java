@@ -1,19 +1,18 @@
 package com.cs491.languageapp.service;
 
+import com.cs491.languageapp.core.exception.OccupantSuccessDoesntCreateYet;
+import com.cs491.languageapp.core.exception.constant.Constant;
 import com.cs491.languageapp.entity.*;
-import com.cs491.languageapp.entity.Convertor.OccupantConverter;
 import com.cs491.languageapp.entity.Convertor.OccupantSuccessConverter;
-import com.cs491.languageapp.entity.Convertor.WordConverter;
 import com.cs491.languageapp.entity.request.CreateOccupantSuccessRequest;
 import com.cs491.languageapp.entity.response.CreateOccupantSuccessResponse;
-import com.cs491.languageapp.repostory.OccupantSuccessRepository;
+import com.cs491.languageapp.entity.response.repostory.OccupantSuccessRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +42,7 @@ public class OccupantSuccessService {
         OccupantSuccess save = occupantSuccessRepository.save(occupantSuccess);
 
 
-        //success calculate
+        //total success calculate
         if (request.isTrue()) {
             Level level = wordService.getById(request.getWordId()).getLevel();
             successOfOccupantService.update(request.getOccupantId(), level);
@@ -62,7 +61,7 @@ public class OccupantSuccessService {
                                         occupantSuccess1 -> occupantSuccess1
                                                 .getWord()
                                                 .getLevel()
-                                                .toString()//TODO a2 levelden hıc yoksa hata verecek dogrulama yap
+                                                .toString()
                                                 .equalsIgnoreCase(level)
                                 )
                         .toList();
@@ -86,7 +85,14 @@ public class OccupantSuccessService {
     //Bean of StartConfig
     public void deleteAll() {
         if (
-                (occupantSuccessRepository.findTopByOrderByIdAsc().getLocalDateTime().getDayOfYear() + 7)
+                (occupantSuccessRepository
+                        .findTopByOrderByIdAsc()
+                        .orElseThrow
+                                (
+                                        () -> new OccupantSuccessDoesntCreateYet
+                                                (Constant.OCCUPANT_SUCCESS_DOESNT_CREATE_YET)
+                                )
+                        .getLocalDateTime().getDayOfYear() + 7)
                         == LocalDateTime.now().getDayOfYear()
         ) {
             occupantSuccessRepository.deleteAll();

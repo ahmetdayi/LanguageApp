@@ -1,10 +1,14 @@
 package com.cs491.languageapp.service;
 
+import com.cs491.languageapp.core.exception.LevelNullException;
+import com.cs491.languageapp.core.exception.TotalSuccessOfOccupantDoesntExistYetException;
+import com.cs491.languageapp.core.exception.WrongLevelSelectedException;
+import com.cs491.languageapp.core.exception.constant.Constant;
 import com.cs491.languageapp.entity.Convertor.TotalSuccessOfOccupantConverter;
 import com.cs491.languageapp.entity.Level;
 import com.cs491.languageapp.entity.TotalSuccessOfOccupant;
 import com.cs491.languageapp.entity.response.TotalSuccessOfOccupantResponse;
-import com.cs491.languageapp.repostory.TotalSuccessOfOccupantRepository;
+import com.cs491.languageapp.entity.response.repostory.TotalSuccessOfOccupantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +22,15 @@ public class TotalSuccessOfOccupantService {
 
 
     public void create(TotalSuccessOfOccupant request) {
-
-        TotalSuccessOfOccupant successOfOccupant = new TotalSuccessOfOccupant
-                (
-                        request.getA1Level(),
-                        request.getA2Level(),
-                        request.getB1Level(),
-                        request.getB2Level(),
-                        request.getOccupant()
-                );
-        successOfOccupantConverter.convert(totalSuccessOfOccupantRepository.save(successOfOccupant));
+        successOfOccupantConverter.convert(totalSuccessOfOccupantRepository.save(request));
     }
 
     public void update(int occupantId, Level level) {
         TotalSuccessOfOccupant
-                successOfOccupant = totalSuccessOfOccupantRepository
-                .findByOccupant_Id(occupantId);
+                successOfOccupant = findByOccupant_Id(occupantId);
+        if(level==null){
+            throw new LevelNullException(Constant.LEVEL_IS_NULL);
+        }
 
         if(level.toString().equals("A1")){
             successOfOccupant.setA1Level(successOfOccupant.getA1Level() +1);
@@ -45,12 +42,19 @@ public class TotalSuccessOfOccupantService {
             successOfOccupant.setB1Level(successOfOccupant.getB1Level() +1);
         }
         else{
-            //TODO hata don
+            throw new WrongLevelSelectedException(Constant.WRONG_LEVEL_SELECTED);
         }
         successOfOccupantConverter.convert(totalSuccessOfOccupantRepository.save(successOfOccupant));
     }
 
     public TotalSuccessOfOccupantResponse getByOccupant_Id(int occupantId){
-        return successOfOccupantConverter.convert(totalSuccessOfOccupantRepository.findByOccupant_Id(occupantId));
+        return successOfOccupantConverter.convert(findByOccupant_Id(occupantId));
+    }
+
+    protected TotalSuccessOfOccupant findByOccupant_Id(int occupantId){
+        return totalSuccessOfOccupantRepository
+                .findByOccupant_Id(occupantId).orElseThrow(
+                        ()->new TotalSuccessOfOccupantDoesntExistYetException
+                                (Constant.TOTAL_SUCCESS_OF_OCCUPANT_DOESNT_EXIST_YET));
     }
 }

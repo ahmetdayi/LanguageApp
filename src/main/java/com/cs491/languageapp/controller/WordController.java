@@ -1,8 +1,8 @@
 package com.cs491.languageapp.controller;
 
-import com.cs491.languageapp.entity.Word;
+
 import com.cs491.languageapp.entity.request.CreateWordRequest;
-import com.cs491.languageapp.entity.request.GetByLevelRequest;
+
 import com.cs491.languageapp.entity.response.CreateWordResponse;
 import com.cs491.languageapp.entity.response.WordResponse;
 import com.cs491.languageapp.service.WordService;
@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,18 +20,19 @@ import java.util.List;
 public class WordController {
     private final WordService wordService;
     @GetMapping // api ile ilişki kulduğun request
-    public ResponseEntity<List<Word>> getAll(){
-        return new ResponseEntity<>( wordService.getAll(), HttpStatus.OK); // iki kere oluşturulmasının sebebi anlayered arcitechture
+    public ResponseEntity<List<WordResponse>> getAll(){
+        return new ResponseEntity<>(wordService.getAll(), HttpStatus.OK); // iki kere oluşturulmasının sebebi anlayered arcitechture
     }
    @PostMapping
-    public ResponseEntity<CreateWordResponse> create(@RequestBody CreateWordRequest createWordRequest){
+    public ResponseEntity<CreateWordResponse> create(@Valid @RequestBody CreateWordRequest createWordRequest){
         return new ResponseEntity<>(wordService.create(createWordRequest),HttpStatus.CREATED);
 
 
     }
     @GetMapping("/getByLevel")
-    public ResponseEntity<List<WordResponse>> getByLevelPageable(@RequestBody GetByLevelRequest request){
-        return new ResponseEntity<>(wordService.getByLevelPageable(request),HttpStatus.OK);
+    public ResponseEntity<List<WordResponse>> getByLevelPageable
+            (@Valid @RequestParam int page,@Valid @RequestParam int size,@Valid @RequestParam String level){
+        return new ResponseEntity<>(wordService.getByLevelPageable(page,size,level),HttpStatus.OK);
     }
 
 }

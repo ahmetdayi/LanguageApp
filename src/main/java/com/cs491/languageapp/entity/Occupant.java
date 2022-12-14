@@ -22,17 +22,21 @@ public class Occupant {
     private String email;
 
     private String password;
+
+    private String matchingPassword;
+
     @OneToMany(cascade =CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "occupant")
     private List<OccupantSuccess> occupantSuccesses;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "occupant")
     private TotalSuccessOfOccupant totalSuccessOfOccupant;
 
-    public Occupant(String name, String email, String password) {
+    public Occupant(String name, String email, String password,String matchingPassword) {
 
         this.name = name;
         this.email = email;
         this.password = password;
+        this.matchingPassword=matchingPassword;
 
     }
 
