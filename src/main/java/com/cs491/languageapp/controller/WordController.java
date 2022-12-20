@@ -4,6 +4,7 @@ package com.cs491.languageapp.controller;
 import com.cs491.languageapp.entity.request.CreateWordRequest;
 
 import com.cs491.languageapp.entity.response.CreateWordResponse;
+import com.cs491.languageapp.entity.response.QuestionResponse;
 import com.cs491.languageapp.entity.response.WordResponse;
 import com.cs491.languageapp.service.WordService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class WordController {
 
     }
     @GetMapping("/getByLevel")
-    public ResponseEntity<List<WordResponse>> getByLevelPageable
+    public ResponseEntity<QuestionResponse> getByLevelPageable
             (@Valid @RequestParam int page,@Valid @RequestParam int size,@Valid @RequestParam String level){
         return new ResponseEntity<>(wordService.getByLevelPageable(page,size,level),HttpStatus.OK);
     }
