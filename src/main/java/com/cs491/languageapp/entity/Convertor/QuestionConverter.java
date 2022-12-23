@@ -1,8 +1,9 @@
 package com.cs491.languageapp.entity.Convertor;
 
-import com.cs491.languageapp.entity.Word;
+
 import com.cs491.languageapp.entity.response.QuestionResponse;
 import com.cs491.languageapp.entity.response.WordResponse;
+import com.cs491.languageapp.entity.response.WordsResponseWithoutImg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +16,9 @@ public class QuestionConverter {
     private final ImageConverter imageConverter;
 
 
-    public QuestionResponse convert(List<WordResponse> fromList, WordResponse wordResponse) {
+    public QuestionResponse convert(List<WordsResponseWithoutImg> fromList, WordResponse wordResponse) {
         return new QuestionResponse(
-                imageConverter.converter(wordResponse.getImg()),
+                wordResponse.getImg(),
                 fromList,
                 wordResponse.getName()
         );

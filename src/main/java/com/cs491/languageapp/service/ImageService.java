@@ -6,7 +6,7 @@ import com.cs491.languageapp.entity.Convertor.ImageConverter;
 import com.cs491.languageapp.entity.Img;
 import com.cs491.languageapp.entity.Word;
 import com.cs491.languageapp.entity.response.ImageResponse;
-import com.cs491.languageapp.entity.response.repostory.ImgRepository;
+import com.cs491.languageapp.repostory.ImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

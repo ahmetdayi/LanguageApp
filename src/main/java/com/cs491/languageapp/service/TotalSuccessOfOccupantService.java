@@ -8,7 +8,7 @@ import com.cs491.languageapp.entity.Convertor.TotalSuccessOfOccupantConverter;
 import com.cs491.languageapp.entity.Level;
 import com.cs491.languageapp.entity.TotalSuccessOfOccupant;
 import com.cs491.languageapp.entity.response.TotalSuccessOfOccupantResponse;
-import com.cs491.languageapp.entity.response.repostory.TotalSuccessOfOccupantRepository;
+import com.cs491.languageapp.repostory.TotalSuccessOfOccupantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

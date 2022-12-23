@@ -1,4 +1,4 @@
-package com.cs491.languageapp.entity.response.repostory;
+package com.cs491.languageapp.repostory;
 
 import com.cs491.languageapp.entity.Level;
 import com.cs491.languageapp.entity.Word;

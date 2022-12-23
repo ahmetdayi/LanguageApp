@@ -11,7 +11,8 @@ import com.cs491.languageapp.entity.request.CreateWordRequest;
 import com.cs491.languageapp.entity.response.CreateWordResponse;
 import com.cs491.languageapp.entity.response.QuestionResponse;
 import com.cs491.languageapp.entity.response.WordResponse;
-import com.cs491.languageapp.entity.response.repostory.WordRepository;
+import com.cs491.languageapp.entity.response.WordsResponseWithoutImg;
+import com.cs491.languageapp.repostory.WordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,13 +48,14 @@ public class WordService {
         Pageable pageable = PageRequest.of(page-1, size);
         List<Word> byLevelA1 = wordRepository.findByLevel(levelConverter.convert(level),pageable);//pageable olusturup kacıncı sayfayı gosterecegımızı ve bır sayfada kac kelıme gosterilecegini belırtıyoruz.
         List<WordResponse> wordResponses = wordConverter.convertWordResponse(byLevelA1);
+        List<WordsResponseWithoutImg> wordsResponseWithoutImgs = wordConverter.convertWordWithout(byLevelA1);
         Random random = new Random();
         int wordNumber = random.nextInt(size);
         WordResponse choosenWord = wordResponses.get(wordNumber);
-        return questionCnverter.convert(wordResponses,choosenWord);
+        return questionCnverter.convert(wordsResponseWithoutImgs,choosenWord);
     }
 
-    protected List<WordResponse> getByLevel(String level){
+    public List<WordResponse> getByLevel(String level){
         return wordConverter.convertWordResponse(wordRepository.findByLevel(levelConverter.convert(level)));
     }
 

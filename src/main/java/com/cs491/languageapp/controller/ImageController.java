@@ -20,9 +20,9 @@ public class ImageController {
 
     @PostMapping()
     public ResponseEntity<ImageResponse> createImage(@Valid @RequestParam("file") MultipartFile multipartFile,
-                                                     @Valid @RequestParam("carId") int carId) {
+                                                     @Valid @RequestParam("wordId") int wordId) {
 
-        return new ResponseEntity<>(imageService.addImage(multipartFile, carId), HttpStatus.CREATED);
+        return new ResponseEntity<>(imageService.addImage(multipartFile, wordId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{imageId}")

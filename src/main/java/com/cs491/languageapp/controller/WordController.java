@@ -30,10 +30,16 @@ public class WordController {
 
 
     }
-    @GetMapping("/getByLevel")
+    @GetMapping("/getByLevelPageable")
     public ResponseEntity<QuestionResponse> getByLevelPageable
             (@Valid @RequestParam int page,@Valid @RequestParam int size,@Valid @RequestParam String level){
         return new ResponseEntity<>(wordService.getByLevelPageable(page,size,level),HttpStatus.OK);
     }
+
+    @GetMapping("/getAllByLevel/{level}")
+    public ResponseEntity<List<WordResponse>> getAllByLevel(@PathVariable("level") String level){
+        return new ResponseEntity<>(wordService.getByLevel(level),HttpStatus.OK);
+    }
+
 
 }

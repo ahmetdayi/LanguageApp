@@ -6,7 +6,7 @@ import com.cs491.languageapp.entity.*;
 import com.cs491.languageapp.entity.Convertor.OccupantSuccessConverter;
 import com.cs491.languageapp.entity.request.CreateOccupantSuccessRequest;
 import com.cs491.languageapp.entity.response.CreateOccupantSuccessResponse;
-import com.cs491.languageapp.entity.response.repostory.OccupantSuccessRepository;
+import com.cs491.languageapp.repostory.OccupantSuccessRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

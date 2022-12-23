@@ -10,7 +10,7 @@ import com.cs491.languageapp.entity.request.UpdateOccupantRequest;
 import com.cs491.languageapp.entity.response.CreateOccupantResponse;
 import com.cs491.languageapp.entity.response.OccupantResponse;
 import com.cs491.languageapp.entity.response.UpdateOccupantResponse;
-import com.cs491.languageapp.entity.response.repostory.OccupantRepository;
+import com.cs491.languageapp.repostory.OccupantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
