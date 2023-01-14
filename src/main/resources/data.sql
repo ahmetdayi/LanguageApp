@@ -1,0 +1,22 @@
+INSERT IGNORE INTO public.word (level, mean, name)
+VALUES
+  ('A1', 'apple', 'Apple'),
+  ('A1', 'orange', 'Orange'),
+  ('A1', 'banana', 'Banana'),
+  ('A1', 'grape', 'Grape'),
+  ('A1', 'strawberry', 'Strawberry'),
+ ('A2', 'pear', 'Pear'),
+  ('A2', 'kiwi', 'Kiwi'),
+  ('A2', 'mango', 'Mango'),
+  ('A2', 'pineapple', 'Pineapple'),
+  ('A2', 'apricot', 'Apricot'),
+('B1', 'peach', 'Peach'),
+  ('B1', 'plum', 'Plum'),
+  ('B1', 'cherry', 'Cherry'),
+  ('B1', 'pomegranate', 'Pomegranate'),
+  ('B1', 'fig', 'Fig'),
+('B2', 'tangerine', 'Tangerine'),
+  ('B2', 'guava', 'Guava'),
+  ('B2', 'persimmon', 'Persimmon'),
+  ('B2', 'dragon fruit', 'Dragon Fruit'),
+  ('B2', 'kiwifruit', 'Kiwifruit');

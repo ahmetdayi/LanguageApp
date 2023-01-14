@@ -23,6 +23,10 @@ public class OccupantService {
     private final TotalSuccessOfOccupantService successOfOccupantService;
     public CreateOccupantResponse create(CreateOccupantRequest request) {
 
+        if(occupantRepository.findByEmail(request.getEmail()).isPresent()){
+            throw new RuntimeException("Email exist");
+        }
+
         Occupant occupant = new Occupant(request.getName(), request.getEmail(), request.getPassword(), request.getMatchingPassword());
         CreateOccupantResponse convert = occupantConverter.convert(occupantRepository.save(occupant)); // methodu data base e kaydetmek için yazılır UserREPOSİTORY.SAVE(SAVE)
 
